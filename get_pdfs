@@ -3,13 +3,15 @@
 # Checking arguments
 [[ $# -gt 0 ]] || printf "\nNo URL was specified!\nExiting..\n\n";
 
+
+TEMP_FILE='URL_list'; 
 URL=$1; # the url where the PDF files are listed
 BASE_URL=$2; #Optional: the base URL in case the pdf urls on the page
             # are not complete
 export BASE_URL # to be used in perl command
 
-curl $URL | grep ".pdf" > all_pdf;
-perl -pi -e 's/^.*?<a href="(.*?\.pdf)">.*/\1/gi' all_pdf;
-perl -e 'while(<>){print $ENV{BASE_URL}.$_;}' all_pdf;
-wget -i all_pdf;
-rm all_pdf;
+curl $URL | grep ".pdf" > $TEMP_FILE;
+perl -pi -e 's/^.*?<a href="(.*?\.pdf)">.*/\1/gi' $TEMP_FILE;
+perl -e 'while(<>){print $ENV{BASE_URL}.$_;}' $TEMP_FILE;
+wget -i $TEMP_FILE;
+rm $TEMP_FILE;
