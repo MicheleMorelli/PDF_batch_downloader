@@ -9,8 +9,7 @@ BASE_URL=$2; #Optional: the base URL in case the pdf urls on the page
 export BASE_URL # to be used in perl command
 
 curl $URL | grep ".pdf" > all_pdf;
-echo "starting regex"
-perl -pi -e 'if ($_ !~ m#^http#gi){ s/^.*?<a href="(.*?\.pdf)">.*/\1/gi}' all_pdf;
+perl -pi -e 's/^.*?<a href="(.*?\.pdf)">.*/\1/gi' all_pdf;
 perl -e 'while(<>){print $ENV{BASE_URL}.$_;}' all_pdf;
 wget -i all_pdf;
 rm all_pdf;
