@@ -12,6 +12,6 @@ export BASE_URL # to be used in perl command
 
 curl $URL | grep ".pdf" > $TEMP_FILE;
 perl -pi -e 's/^.*?<a href="(.*?\.pdf)">.*/\1/gi' $TEMP_FILE;
-#perl -e 'while(<>){print $ENV{BASE_URL}.$_;}' $TEMP_FILE;
+perl -e 'while(<>){print $ENV{BASE_URL}.$_;}' $TEMP_FILE;
 wget --no-parent -i $TEMP_FILE;
-#rm $TEMP_FILE;
+rm $TEMP_FILE;
