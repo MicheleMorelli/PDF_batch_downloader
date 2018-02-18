@@ -1,9 +1,16 @@
 #! /bin/bash 
 
-[[ $# -gt 0 ]] || printf "\nNo URL was specified!\nExiting..\n\n" && exit 1;
+# Checking arguments
+[[ $# -gt 0 ]] || printf "\nNo URL was specified!\nExiting..\n\n";
 
+URL=$1; # the url where the PDF files are listed
+BASE_URL=$2; #Optional: the base URL in case the pdf urls on the page
+            # are not complete
+export BASE_URL # to be used in perl command
 
-
-
-
-
+curl $URL | grep ".pdf" > all_pdf;
+echo "starting regex"
+perl -pi -e 'if ($_ !~ m#^http#gi){ s/^.*?<a href="(.*?\.pdf)">.*/\1/gi}' all_pdf;
+perl -e 'while(<>){print $ENV{BASE_URL}.$_;}' all_pdf;
+wget -i all_pdf;
+rm all_pdf;
