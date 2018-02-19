@@ -1,6 +1,8 @@
 # Quick PDF downloader #
 
-Quick &amp; dirty tool to download multiple PDFs listed on an html webpage. All this can be done much more easily with a simple wget -r -A .pdf URL, but I had some time to kill and decided to reinvent the wheel a bit :-). 
+Quick &amp; dirty tool to download multiple PDFs listed on an html webpage. 
+
+All this can be done much more easily with a simple wget -r -A .pdf URL, but I had some time to kill and decided to reinvent the wheel a bit, because I was curious to try wget's -i option (which is pretty neat). 
 
 ## How to use ##
 ```
